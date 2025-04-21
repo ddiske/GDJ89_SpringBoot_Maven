@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!-- windows -> preferences -> XML(Wild Web Developer) -> Download external... check 후 저장 -->
+  
+<mapper namespace="com.root.app.board.qna.QnaDAO">
+
+	<select id="getList" resultType="QnaVO" parameterType="Pager">
+		SELECT * FROM QNA_TBL
+		<include refid="search"></include>
+		ORDER BY BOARD_NUM DESC
+		LIMIT #{startNum}, #{perPage}
+	</select>
+	
+	<select id="getDetail" resultMap="getDetailResult" parameterType="BoardVO">
+		SELECT * FROM QNA_TBL
+		LEFT OUTER JOIN QNA_FILES_TBL
+		USING (BOARD_NUM)
+		WHERE BOARD_NUM = #{boardNum}
+	</select>
+	
+	<resultMap type="QnaVO" id="getDetailResult">
+		<id column="BOARD_NUM" property="boardNum"/>
+		<result column="BOARD_TITLE" property="boardTitle"/>
+		<result column="BOARD_CONTENTS" property="boardContents"/>
+		<result column="BOARD_DATE" property="boardDate"/>
+		<result column="BOARD_HIT" property="boardHit"/>
+		<result column="USER_NAME" property="userName"/>
+		<collection property="boardFileVOs" javaType="List" ofType="BoardFileVO">
+			<id column="FILE_NUM" property="fileNum"/>
+			<result column="FILE_NAME" property="fileName"/>
+			<result column="OLD_NAME" property="oldName"/>
+		</collection>
+	</resultMap>
+	
+	<select id="getFileDetail" parameterType="BoardFileVO" resultType="BoardFileVO">
+		SELECT * FROM QNA_FILES_TBL
+		WHERE FILE_NUM = #{fileNum}
+	</select>
+	
+	<insert id="add" parameterType="BoardVO" useGeneratedKeys="true" keyProperty="boardNum">
+		INSERT INTO QNA_TBL
+		VALUES (0, #{boardTitle}, #{boardContents}, now(), 0, #{userName}, #{boardNum}, 0, 0)
+	</insert>
+	
+	<insert id="addAll" parameterType="java.util.List">
+		INSERT INTO QNA_TBL (BOARD_TITLE, BOARD_CONTENTS, BOARD_DATE, BOARD_HIT, USER_NAME)
+		VALUES
+			<foreach collection="list" item="vo" open="" separator=", " close="">
+				(#{vo.boardTitle}, #{vo.boardContents}, now(), 0, #{vo.userName})
+			</foreach>
+	</insert>
+	
+	<update id="refUpdate" parameterType="QnaVO">
+		UPDATE QNA_TBL
+		SET BOARD_REF = #{boardRef}
+		WHERE BOARD_NUM = #{boardNum}
+	</update>
+	
+	<select id="getTotalCount" parameterType="Pager">
+		SELECT COUNT(BOARD_NUM) FROM QNA_TBL
+		<include refid="search"></include>
+	</select>
+	
+	<sql id="search">
+		WHERE BOARD_NUM > 0 AND
+			<choose>
+				<when test="kind=='k1'">BOARD_TITLE LIKE CONCAT('%', #{search}, '%')</when>
+				<when test="kind=='k2'">BOARD_TITLE LIKE CONCAT('%', #{search}, '%') OR BOARD_CONTENTS LIKE CONCAT('%', #{search}, '%')</when>
+				<when test="kind=='k3'">USER_NAME LIKE CONCAT('%', #{search}, '%')</when>
+				<otherwise>BOARD_TITLE LIKE '%'</otherwise>
+			</choose>
+	</sql>
+	
+	<insert id="addFile" parameterType="BoardFileVO">
+		INSERT INTO QNA_FILES_TBL (FILE_NAME, OLD_NAME, BOARD_NUM)
+		VALUES (#{fileName}, #{oldName}, #{boardNum})
+	</insert>
+	
+	<update id="update" parameterType="BoardVO">
+		UPDATE QNA_TBL
+		SET BOARD_TITLE = #{boardTitle}, BOARD_CONTENTS = #{boardContents}
+		WHERE BOARD_NUM = #{boardNum}
+	</update>
+	
+	<delete id="delete" parameterType="BoardVO">
+		DELETE FROM QNA_TBL
+		WHERE BOARD_NUM = #{boardNum}
+	</delete>
+	
+</mapper>
