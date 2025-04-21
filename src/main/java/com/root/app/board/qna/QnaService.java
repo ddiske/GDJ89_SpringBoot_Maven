@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.root.app.board.BoardFileVO;
@@ -14,10 +15,11 @@ import com.root.app.files.FileManager;
 import com.root.app.util.Pager;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class QnaService implements BoardService {
 
 	@Autowired
-	private QnaDAO noticeDAO;
+	private QnaDAO qnaDAO;
 	
 	@Autowired
 	private FileManager fileManager;
@@ -30,20 +32,20 @@ public class QnaService implements BoardService {
 	
 	@Override
 	public List<BoardVO> getList(Pager pager) throws Exception {
-		pager.make(noticeDAO.getTotalCount(pager));
-		List<BoardVO> ar = noticeDAO.getList(pager);
+		pager.make(qnaDAO.getTotalCount(pager));
+		List<BoardVO> ar = qnaDAO.getList(pager);
 		return ar;
 	}
 
 	@Override
 	public BoardVO getDetail(BoardVO boardVO) throws Exception {
-		boardVO = noticeDAO.getDetail(boardVO);
+		boardVO = qnaDAO.getDetail(boardVO);
 		return boardVO;
 	}
 
 	@Override
 	public int add(BoardVO boardVO, MultipartFile [] multipartFiles) throws Exception {
-		int result = noticeDAO.add(boardVO);
+		int result = qnaDAO.add(boardVO);
 		if(multipartFiles != null) {
 			// 파일을 HDD에 저장
 			for(MultipartFile f : multipartFiles) {
@@ -58,7 +60,7 @@ public class QnaService implements BoardService {
 				boardFileVO.setOldName(f.getOriginalFilename());
 				boardFileVO.setBoardNum(boardVO.getBoardNum());
 				
-				noticeDAO.addFile(boardFileVO);
+				qnaDAO.addFile(boardFileVO);
 			}
 			
 			
@@ -71,17 +73,17 @@ public class QnaService implements BoardService {
 
 	@Override
 	public BoardFileVO getFileDetail(BoardFileVO boardFileVO) throws Exception {
-		return noticeDAO.getFileDetail(boardFileVO);
+		return qnaDAO.getFileDetail(boardFileVO);
 	}
 
 	@Override
 	public int update(BoardVO boardVO) throws Exception {
-		return noticeDAO.update(boardVO);
+		return qnaDAO.update(boardVO);
 	}
 
 	@Override
 	public int delete(BoardVO boardVO) throws Exception {
-		return noticeDAO.delete(boardVO);
+		return qnaDAO.delete(boardVO);
 	}
 
 }

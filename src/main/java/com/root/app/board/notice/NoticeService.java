@@ -61,9 +61,7 @@ public class NoticeService implements BoardService {
 				boardFileVO.setBoardNum(boardVO.getBoardNum());
 				
 				result = noticeDAO.addFile(boardFileVO);
-				if(result > 0) {
-					throw new Exception();
-				}
+				
 			}
 			
 			

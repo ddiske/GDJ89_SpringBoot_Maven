@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 public class QnaController {
 	
 	@Autowired
-	private QnaService noticeService;
+	private QnaService qnaService;
 	
 	@Value("${menu.board.qna.name}")
 	private String name;
@@ -37,7 +37,7 @@ public class QnaController {
 	
 	@GetMapping("list")
 	public String getList(Model model, Pager pager) throws Exception {
-		List<BoardVO> ar = noticeService.getList(pager);
+		List<BoardVO> ar = qnaService.getList(pager);
 		model.addAttribute("list", ar);
 //		model.addAttribute("pager", pager);
 		
@@ -47,7 +47,7 @@ public class QnaController {
 	@GetMapping("detail")
 	public String getDetail(BoardVO boardVO, Model model) throws Exception {
 		
-		boardVO = noticeService.getDetail(boardVO);
+		boardVO = qnaService.getDetail(boardVO);
 		model.addAttribute("vo", boardVO);
 		
 		return "board/detail";
@@ -55,7 +55,7 @@ public class QnaController {
 	
 	@GetMapping("fileDown")
 	public String getFileDetail(BoardFileVO boardFileVO, Model model) throws Exception {
-		boardFileVO = noticeService.getFileDetail(boardFileVO);
+		boardFileVO = qnaService.getFileDetail(boardFileVO);
 		
 		model.addAttribute("fileVO", boardFileVO);
 		
@@ -71,20 +71,20 @@ public class QnaController {
 	public String add(BoardVO boardVO, @RequestParam(name = "attaches") MultipartFile [] attaches) throws Exception {
 		
 		boardVO.setUserName("addTest");
-		int result = noticeService.add(boardVO, attaches);
+		int result = qnaService.add(boardVO, attaches);
 		return "redirect:./list";
 	}
 	
 	@GetMapping("update")
 	public String update(BoardVO boardVO, Model model) throws Exception {
-		boardVO = noticeService.getDetail(boardVO);
+		boardVO = qnaService.getDetail(boardVO);
 		model.addAttribute("vo", boardVO);
 		return "board/update";
 	}
 	
 	@PostMapping("update")
 	public String update(BoardVO boardVO) throws Exception {
-		noticeService.update(boardVO);
+		qnaService.update(boardVO);
 		
 		return "redirect:./detail?boardNum="+boardVO.getBoardNum();
 	}
@@ -92,7 +92,7 @@ public class QnaController {
 	@PostMapping("delete")
 	public String delete(BoardVO boardVO) throws Exception {
 		
-		noticeService.delete(boardVO);
+		qnaService.delete(boardVO);
 		
 		return "redirect:./list";
 	}
