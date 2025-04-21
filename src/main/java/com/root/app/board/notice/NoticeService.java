@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.root.app.board.BoardFileVO;
@@ -42,6 +43,7 @@ public class NoticeService implements BoardService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int add(BoardVO boardVO, MultipartFile [] multipartFiles) throws Exception {
 		int result = noticeDAO.add(boardVO);
 		if(multipartFiles != null) {
@@ -58,7 +60,10 @@ public class NoticeService implements BoardService {
 				boardFileVO.setOldName(f.getOriginalFilename());
 				boardFileVO.setBoardNum(boardVO.getBoardNum());
 				
-				noticeDAO.addFile(boardFileVO);
+				result = noticeDAO.addFile(boardFileVO);
+				if(result > 0) {
+					throw new Exception();
+				}
 			}
 			
 			
