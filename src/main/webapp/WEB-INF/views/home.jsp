@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,8 +23,19 @@
 
 			<!-- content  /.container-fluid  -->
 	    	<div class="container-fluid">
-	    	
+	    		<p>
+		    		<spring:message code="welcome"></spring:message>
+	    		</p>
+	    		<p>
+		    		<spring:message code="hello" var="m"></spring:message>
+	    		</p>
+	    		<p>
+	    			<spring:message code="hi" text="안녕"></spring:message>
+	    		</p>
 				<h1>Home</h1>
+				<h3>${m }</h3>
+				
+				<spring:message code="welcome.login" arguments="${user.username }, ${user.name }" argumentSeparator=","></spring:message>
 				<img alt="" src="/images/1.jpg">
 				<img alt="" src="/images/2.jpg">
 	    
