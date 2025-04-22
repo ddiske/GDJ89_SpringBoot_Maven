@@ -200,5 +200,10 @@
 	</ul>
 
 	</c:if>
+	
+	<ul class="navbar-nav ml-auto">
+		<li class="nav-item mx-1"><a href="?lang=ko">KOR</a></li>
+		<li class="nav-item mx-1"><a href="?lang=en">ENG</a></li>
+	</ul>
 </nav>
 <!-- End of Topbar -->
