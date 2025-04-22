@@ -33,39 +33,17 @@
 									<div class="col-lg-7">
 										<div class="p-5">
 											<div class="text-center">
-												<h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+												<h1 class="h4 text-gray-900 mb-4">My Page!</h1>
 											</div>
 											<form:form modelAttribute="userVO" cssClass="user" action="./join" method="post" enctype="multipart/form-data">
-												<div class="form-group">
-													<form:input cssClass="form-control form-control-user"
-															id="exampleID" placeholder="ID" path="username"/>
-															<div>
-																<form:errors path="username"></form:errors>
-															</div>
-												</div>
-												<div class="form-group row">
-													<div class="col-sm-6 mb-3 mb-sm-0">
-														<form:password cssClass="form-control form-control-user"
-															id="exampleIPassword" placeholder="Password" path="password"/>
-															<div>
-																<form:errors path="password"></form:errors>
-															</div>
-													</div>
-													<div class="col-sm-6">
-														<form:password cssClass="form-control form-control-user" id="exampleRepeatPassword" placeholder="Repeat Password" path="passwordCheck" />
-														<div>
-															<form:errors path="passwordCheck"></form:errors>
-														</div>
-													</div>
-												</div>
 												<div class="form-group row">
 													<div class="col-sm-6 mb-3 mb-sm-0">
 														<form:input cssClass="form-control form-control-user"
-															id="exampleName" placeholder="Name" path="name" />
+															id="exampleName" placeholder="Name" path="name" value="${user.name }" />
 													</div>
 													<div class="col-sm-6">
 														<input type="date" Class="form-control form-control-user"
-															id="exampleBirth" placeholder="Birth" name="birth" />
+															id="exampleBirth" placeholder="Birth" name="birth" value="${user.birth }"/>
 															<div>
 																<form:errors path="birth"></form:errors>
 															</div>
@@ -74,14 +52,14 @@
 												<div class="form-group row">
 													<div class="col-sm-6 mb-3 mb-sm-0">
 														<form:input	cssClass="form-control form-control-user"
-															id="exampleInputEmail" placeholder="Email Address" path="email" />
+															id="exampleInputEmail" placeholder="Email Address" path="email" value="${user.email }"/>
 															<div>
 																<form:errors path="email"></form:errors>
 															</div>
 													</div>
 													<div class="col-sm-6">
 														<form:input cssClass="form-control form-control-user"
-															id="examplePhone" placeholder="Phone Number" path="phone"></form:input>
+															id="examplePhone" placeholder="Phone Number" path="phone" value="${user.phone }"></form:input>
 													</div>
 												</div>
 				                                <input type="file" name="multipartFile">

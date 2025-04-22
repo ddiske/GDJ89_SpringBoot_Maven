@@ -15,4 +15,9 @@
 		WHERE USERNAME = #{username} AND PASSWORD = #{password}
 	</select>
 	
+	<select id="getDetail" parameterType="UserVO" resultType="UserVO">
+		SELECT USERNAME FROM USER_TBL
+		WHERE USERNAME = #{username}
+	</select>
+	
 </mapper>
