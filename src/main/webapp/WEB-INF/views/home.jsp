@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,6 +24,14 @@
 
 			<!-- content  /.container-fluid  -->
 	    	<div class="container-fluid">
+	    	
+	    		<sec:authorize access="hasAnyRole('ADMIN', 'MANAGER')">
+	    			<h3>Admin View</h3>
+	    		</sec:authorize>
+	    		<sec:authorize access="isAuthenticated()">
+		    		<sec:authentication property="principal" var="user"/>
+	    		</sec:authorize>
+	    	
 	    		<p>
 		    		<spring:message code="welcome"></spring:message>
 	    		</p>

@@ -34,19 +34,33 @@
 									<div class="col-lg-7">
 										<div class="p-5">
 											<div class="text-center">
-												<h1 class="h4 text-gray-900 mb-4">My Page!</h1>
+												<h1 class="h4 text-gray-900 mb-4">Password Update!</h1>
 											</div>
-											
-											<h3>ID : <sec:authentication property="name"/></h3>
-											<hr>
 											<sec:authentication property="principal" var="user"/>
-											<h3>Name : ${user.name }</h3>
-											<hr>
-											<h3>Email : ${user.email }</h3>
-											<hr>
-											<h3>Phone : <sec:authentication property="principal.phone"/></h3>
-											<hr>
-											<a href="./update">정보수정</a>
+											<form:form modelAttribute="userVO" cssClass="user" action="./updatePassword" method="post" enctype="multipart/form-data">
+												<div class="form-group">
+													<form:password cssClass="form-control form-control-user"
+															id="exampleID" placeholder="Old Password" path="password"/>
+															<div>
+																<form:errors path="password"></form:errors>
+															</div>
+												</div>
+												<div class="form-group row">
+													<div class="col-sm-6 mb-3 mb-sm-0">
+														<form:password	cssClass="form-control form-control-user"
+															id="examplePassword" placeholder="New Password" path="password"/>
+															<div>
+																<form:errors path="password"></form:errors>
+															</div>
+													</div>
+													<div class="col-sm-6">
+														<form:password cssClass="form-control form-control-user"
+															id="examplePasswordCheck" placeholder="Password Check" path="passwordCheck"/>
+													</div>
+												</div>
+												<button type="submit" class="btn btn-primary btn-user btn-block mt-2">수정하기</button>
+												<hr>
+											</form:form>
 										</div>
 									</div>
 								</div>

@@ -10,11 +10,6 @@
 		VALUES (#{username}, #{password}, #{name}, #{phone}, #{email}, #{birth}, #{fileName}, #{oriName})
 	</insert>
 	
-	<select id="login" parameterType="UserVO" resultType="UserVO">
-		SELECT * FROM USER_TBL
-		WHERE USERNAME = #{username} AND PASSWORD = #{password}
-	</select>
-	
 	<select id="getDetail" parameterType="UserVO" resultMap="detailResult">
 		SELECT * FROM USER_TBL U
 		JOIN MEMBER_ROLE_TBL MR
@@ -38,5 +33,11 @@
 			<result column="ROLE_NAME" property="roleName"/>
 		</collection>
 	</resultMap>
+	
+	<update id="update" parameterType="UserVO">
+		UPDATE USER_TBL 
+		SET NAME = #{name}, BIRTH = #{birth}, EMAIL = #{email}, PHONE = #{phone}
+		WHERE USERNAME = #{username}
+	</update>
 	
 </mapper>

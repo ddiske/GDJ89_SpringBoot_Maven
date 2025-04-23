@@ -1,7 +1,13 @@
 package com.root.app.user;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -14,7 +20,7 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class UserVO {
+public class UserVO implements UserDetails {
 	
 	@NotBlank(message = "ID는 필수", groups = JoinGroup.class)
 	private String username;
@@ -34,5 +40,38 @@ public class UserVO {
 	private String oriName;
 	private String fileName;
 	private List<RoleVO> list;
-
+	
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// ROLE_NAME을 리턴
+		List<GrantedAuthority> ar = new ArrayList<>();
+		
+		for(RoleVO vo : this.list) {
+			GrantedAuthority g = new SimpleGrantedAuthority(vo.getRoleName());
+			ar.add(g);
+		}
+		
+		return ar;
+	}
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	
 }
