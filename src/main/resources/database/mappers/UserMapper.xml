@@ -15,9 +15,28 @@
 		WHERE USERNAME = #{username} AND PASSWORD = #{password}
 	</select>
 	
-	<select id="getDetail" parameterType="UserVO" resultType="UserVO">
-		SELECT USERNAME FROM USER_TBL
-		WHERE USERNAME = #{username}
+	<select id="getDetail" parameterType="UserVO" resultMap="detailResult">
+		SELECT * FROM USER_TBL U
+		JOIN MEMBER_ROLE_TBL MR
+		ON U.USERNAME = MR.USERNAME
+		JOIN ROLE_TBL R
+		ON MR.ROLE_NUM = R.ROLE_NUM
+		WHERE U.USERNAME = #{username}
 	</select>
+	
+	<resultMap type="UserVO" id="detailResult">
+		<id column="USERNAME" property="username"/>
+		<result column="PASSWORD" property="password"/>
+		<result column="NAME" property="name"/>
+		<result column="PHONE" property="phone"/>
+		<result column="EMAIL" property="email"/>
+		<result column="BIRTH" property="birth"/>
+		<result column="ORI_NAME" property="oriName"/>
+		<result column="FILE_NAME" property="fileName"/>
+		<collection property="list" javaType="List" ofType="RoleVO">
+			<result column="ROLE_NUM" property="roleNum"/>
+			<result column="ROLE_NAME" property="roleName"/>
+		</collection>
+	</resultMap>
 	
 </mapper>
