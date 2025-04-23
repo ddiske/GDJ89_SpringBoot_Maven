@@ -54,6 +54,7 @@ public class UserService {
 	}
 	
 	public UserVO login(UserVO userVO) throws Exception {
+		
 		return userDAO.login(userVO);
 	}
 
