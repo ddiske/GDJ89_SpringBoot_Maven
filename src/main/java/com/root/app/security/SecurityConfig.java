@@ -42,7 +42,7 @@ public class SecurityConfig  {
 	SecurityFilterChain chain(HttpSecurity httpSecurity) throws Exception {
 		
 		httpSecurity.cors(cors->cors.disable()) /** CORS 허용, Filter에서 사용 가능 */
-					.csrf(csrf->csrf.disable())
+//					.csrf(csrf->csrf.disable())
 					/** 권한 적용 */
 					.authorizeHttpRequests(authorizeRequest->{
 						authorizeRequest.requestMatchers("/notice/add", "/notice/update", "/notice/delete")
