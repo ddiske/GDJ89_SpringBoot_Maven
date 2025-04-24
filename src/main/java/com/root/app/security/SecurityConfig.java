@@ -24,6 +24,9 @@ public class SecurityConfig  {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private SecurityLogoutHandler logoutHandler;
+	
 	// 정적자원들을 Security에서 제외
 	@Bean
 	WebSecurityCustomizer customizer() {
@@ -65,7 +68,8 @@ public class SecurityConfig  {
 					/** Logout 관련 설정 */
 					.logout(logout->{
 						logout.logoutUrl("/user/logout")
-							  .logoutSuccessUrl("/")
+//							  .logoutSuccessUrl("/")
+							  .addLogoutHandler(logoutHandler)
 							  .invalidateHttpSession(true)
 							  .permitAll();
 					})
