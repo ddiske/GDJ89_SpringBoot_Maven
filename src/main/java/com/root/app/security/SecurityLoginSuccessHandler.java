@@ -20,7 +20,7 @@ public class SecurityLoginSuccessHandler implements AuthenticationSuccessHandler
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 		
-		log.info("{}", authentication);
+		log.info("Login Success : {}", authentication);
 		
 		// forward
 //		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/home.jsp");

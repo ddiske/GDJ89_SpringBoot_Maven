@@ -4,10 +4,12 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -20,7 +22,7 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class UserVO implements UserDetails {
+public class UserVO implements UserDetails, OAuth2User {
 	
 	@NotBlank(message = "ID는 필수", groups = JoinGroup.class)
 	private String username;
@@ -40,10 +42,7 @@ public class UserVO implements UserDetails {
 	private String oriName;
 	private String fileName;
 	private List<RoleVO> list;
-	private boolean accountNonExpired;
-	private boolean accountNonLocked;
-	private boolean credentialsNonExpired;
-	private boolean enabled;
+
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -57,7 +56,25 @@ public class UserVO implements UserDetails {
 		
 		return ar;
 	}
+
 	
+	/** OAuth2User */
+	private String accessToken;
+	private String sns;
+	
+	private Map<String, Object> attributes;
+//	@Override
+//	public Map<String, Object> getAttributes() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+	
+	
+	/** UserDetails */
+	private boolean accountNonExpired;
+	private boolean accountNonLocked;
+	private boolean credentialsNonExpired;
+	private boolean enabled;
 	// ID가 존재하지 않는 경우
 	// InternalAuthenticationServiceException: UserDetailsService returned null, which is an interface contract violation
 	

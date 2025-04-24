@@ -43,11 +43,17 @@
 	    		</p>
 				<h1>Home</h1>
 				<h3>${m }</h3>
+				<%-- <c:if test="${not empty user.sns }">
+					<img alt="" src="${user.fileName }">
+				</c:if>
+				<c:if test="${empty user.sns }">
+					<img alt="" src="/files/user/${user.fileName }">
+				</c:if> --%>
 				
 				<spring:message code="welcome.login" arguments="${user.username }, ${user.name }" argumentSeparator=","></spring:message>
 				
 				<sec:authorize access="isAuthenticated()" url="/notice/add" var="user">
-					<a href="/user">Notice Add</a>
+					<a href="/user">Notice</a>
 				</sec:authorize>
 				
 				<img alt="" src="/images/1.jpg">

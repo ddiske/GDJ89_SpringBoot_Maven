@@ -6,7 +6,7 @@
 <mapper namespace="com.root.app.user.UserDAO">
 
 	<insert id="join" parameterType="UserVO">
-		INSERT INTO USER_TBL
+		INSERT INTO USER_TBL (USERNAME, PASSWORD, NAME, PHONE, EMAIL, BIRTH, FILE_NAME, ORI_NAME)
 		VALUES (#{username}, #{password}, #{name}, #{phone}, #{email}, #{birth}, #{fileName}, #{oriName})
 	</insert>
 	

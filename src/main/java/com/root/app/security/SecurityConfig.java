@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.root.app.user.UserService;
+import com.root.app.user.UserSocialService;
 
 @Configuration
 @EnableWebSecurity//(debug = true)
@@ -23,6 +24,9 @@ public class SecurityConfig  {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private UserSocialService service;
 	
 	@Autowired
 	private SecurityLogoutHandler logoutHandler;
@@ -68,8 +72,8 @@ public class SecurityConfig  {
 					/** Logout 관련 설정 */
 					.logout(logout->{
 						logout.logoutUrl("/user/logout")
-//							  .logoutSuccessUrl("/")
-							  .addLogoutHandler(logoutHandler)
+							  .logoutSuccessUrl("/")
+//							  .addLogoutHandler(logoutHandler)
 							  .invalidateHttpSession(true)
 							  .permitAll();
 					})
@@ -90,6 +94,11 @@ public class SecurityConfig  {
 						 .maxSessionsPreventsLogin(false)
 						 .expiredUrl("/");
 						 
+					})
+					.oauth2Login(oauth2Login->{
+						oauth2Login.userInfoEndpoint(user->{
+							user.userService(service);
+						});
 					})
 					;
 		
