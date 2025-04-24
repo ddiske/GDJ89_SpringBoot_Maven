@@ -6,7 +6,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
+
+import com.root.app.user.UserService;
 
 @Configuration
 @EnableWebSecurity//(debug = true)
@@ -17,6 +20,9 @@ public class SecurityConfig  {
 	
 	@Autowired
 	private SecurityLoginFailHandler failHandler;
+	
+	@Autowired
+	private UserService userService;
 	
 	// 정적자원들을 Security에서 제외
 	@Bean
@@ -62,6 +68,24 @@ public class SecurityConfig  {
 							  .logoutSuccessUrl("/")
 							  .invalidateHttpSession(true)
 							  .permitAll();
+					})
+					/** Remember me */
+					.rememberMe(rememberme->{
+						rememberme.rememberMeParameter("remember-me")
+								  .tokenValiditySeconds(60)
+								  .key("rememberkey")
+								  .userDetailsService(userService)
+								  .authenticationSuccessHandler(handler)
+								  .useSecureCookie(false);
+					})
+					// 동시접속 제한
+					.sessionManagement(s->{
+						s.invalidSessionUrl("/")
+						 .sessionFixation().changeSessionId()//.newSession()//.none
+						 .maximumSessions(1)
+						 .maxSessionsPreventsLogin(false)
+						 .expiredUrl("/");
+						 
 					})
 					;
 		
