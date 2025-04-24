@@ -40,6 +40,10 @@ public class UserVO implements UserDetails {
 	private String oriName;
 	private String fileName;
 	private List<RoleVO> list;
+	private boolean accountNonExpired;
+	private boolean accountNonLocked;
+	private boolean credentialsNonExpired;
+	private boolean enabled;
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -53,25 +57,32 @@ public class UserVO implements UserDetails {
 		
 		return ar;
 	}
-	@Override
-	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-	@Override
-	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-	@Override
-	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
-	}
+	
+	// ID가 존재하지 않는 경우
+	// InternalAuthenticationServiceException: UserDetailsService returned null, which is an interface contract violation
+	
+	// 비밀번호가 틀린 경우
+	// BadCredentialsException: 자격 증명에 실패하였습니다.
+	
+//	@Override
+//	public boolean isAccountNonExpired() {
+//		// false면 AccountExpiredException: 사용자 계정의 유효 기간이 만료 되었습니다.
+//		return true;
+//	}
+//	@Override
+//	public boolean isAccountNonLocked() {
+//		// false면 LockedException: 사용자 계정이 잠겨 있습니다.
+//		return true;
+//	}
+//	@Override
+//	public boolean isCredentialsNonExpired() {
+//		// false면 CredentialsExpiredException: 자격 증명 유효 기간이 만료되었습니다.
+//		return true;
+//	}
+//	@Override
+//	public boolean isEnabled() {
+//		// false면 DisabledException: 유효하지 않은 사용자입니다.
+//		return true;
+//	}
 	
 }

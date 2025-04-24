@@ -45,6 +45,11 @@
 				<h3>${m }</h3>
 				
 				<spring:message code="welcome.login" arguments="${user.username }, ${user.name }" argumentSeparator=","></spring:message>
+				
+				<sec:authorize access="isAuthenticated()" url="/notice/add" var="user">
+					<a href="/user">Notice Add</a>
+				</sec:authorize>
+				
 				<img alt="" src="/images/1.jpg">
 				<img alt="" src="/images/2.jpg">
 	    

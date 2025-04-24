@@ -28,6 +28,10 @@
 		<result column="BIRTH" property="birth"/>
 		<result column="ORI_NAME" property="oriName"/>
 		<result column="FILE_NAME" property="fileName"/>
+		<result column="ACCOUNTNONEXPIRED" property="accountNonExpired"/>
+		<result column="accountNonLocked" property="accountNonLocked"/>
+		<result column="credentialsNonExpired" property="credentialsNonExpired"/>
+		<result column="enabled" property="enabled"/>
 		<collection property="list" javaType="List" ofType="RoleVO">
 			<result column="ROLE_NUM" property="roleNum"/>
 			<result column="ROLE_NAME" property="roleName"/>

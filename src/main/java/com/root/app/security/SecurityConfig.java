@@ -1,5 +1,6 @@
 package com.root.app.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,6 +11,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity//(debug = true)
 public class SecurityConfig  {
+	
+	@Autowired
+	private SecurityLoginSuccessHandler handler;
+	
+	@Autowired
+	private SecurityLoginFailHandler failHandler;
 	
 	// 정적자원들을 Security에서 제외
 	@Bean
@@ -43,8 +50,10 @@ public class SecurityConfig  {
 						formLogin.loginPage("/user/login")
 //								 .usernameParameter("id")
 //						 		 .passwordParameter("pw")
-								 .defaultSuccessUrl("/")
-								 .failureUrl("/user/login")
+//								 .defaultSuccessUrl("/")
+								 .successHandler(handler)
+//								 .failureUrl("/user/login")
+								 .failureHandler(failHandler)
 								 .permitAll();
 					})
 					/** Logout 관련 설정 */
