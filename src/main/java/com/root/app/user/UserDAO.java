@@ -9,5 +9,6 @@ public interface UserDAO {
 	public int join(UserVO userVO) throws Exception;
 	public UserVO getDetail(UserVO userVO) throws UsernameNotFoundException;
 	public int update(UserVO userVO) throws Exception;
+	public int statusChange(UserVO userVO) throws Exception;
 
 }

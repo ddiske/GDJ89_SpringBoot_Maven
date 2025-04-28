@@ -42,6 +42,7 @@ public class UserVO implements UserDetails, OAuth2User {
 	private String oriName;
 	private String fileName;
 	private List<RoleVO> list;
+	private boolean status;
 
 	
 	@Override
