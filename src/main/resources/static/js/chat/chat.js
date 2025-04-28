@@ -62,6 +62,7 @@ class Message {
     receiver="";
     date="";
     status="0"; // 0은 전체 1은 1:1
+    roomNum="";
 }
 
 
