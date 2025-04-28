@@ -99,10 +99,10 @@ public class UserController {
 		return "redirect:/";
 	}
 	
-	@GetMapping("logout")
-	public String logout(HttpSession session) throws Exception {
-		session.invalidate();
-		return "redirect:/";
-	}
+//	@GetMapping("logout")
+//	public String logout(HttpSession session) throws Exception {
+//		session.invalidate();
+//		return "redirect:/";
+//	}
 
 }

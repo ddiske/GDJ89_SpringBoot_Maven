@@ -59,6 +59,8 @@ public class SecurityLogoutHandler implements LogoutHandler {
  			}
  			
  		}
+ 		
+ 		log.info("logout");
 		
 	}
 	

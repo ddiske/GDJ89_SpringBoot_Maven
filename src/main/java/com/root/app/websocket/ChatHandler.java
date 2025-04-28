@@ -12,6 +12,9 @@ import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.root.app.user.UserVO;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Component
@@ -22,22 +25,32 @@ public class ChatHandler implements WebSocketHandler {
  	//BroadCast
  	private List<WebSocketSession> list = new ArrayList<>();
  	
- 	private Map<String, List<WebSocketSession>> room = new HashMap<>();
+ 	private Map<String, WebSocketSession> users = new HashMap<>();
  	
  	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		// TODO Auto-generated method stub
  		//Client가 WebSocket 연결시 실행
  		log.info("session : {}", session);
- 		log.info("p: {}", session.getPrincipal()); 
+ 		log.info("p: {}", session.getPrincipal());
  		list.add(session);
+// 		UserVO userVO = (UserVO)session.getPrincipal();
+ 		users.put(session.getPrincipal().getName(), session);
 	}
 
 	@Override
 	public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
 		// TODO Auto-generated method stub
 		//WebSocket으로 연결된 Client가 메세지를 송신 했을때
+		log.info("message : {}", message);
  		log.info("m :  {}", message.getPayload());
+ 		
+ 		MessageVO mes = new MessageVO();
+ 		ObjectMapper om = new ObjectMapper();
+ 		mes = om.readValue(message.getPayload().toString(), MessageVO.class);
+ 		mes.setSender(session.getPrincipal().getName());
+ 		log.info("{}", mes);
+ 		
  		
  		
  		list.forEach(s ->{

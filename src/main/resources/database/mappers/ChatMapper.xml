@@ -9,4 +9,10 @@
 		SELECT USERNAME, NAME, FILE_NAME, STATUS FROM USER_TBL
 	</select>
 	
+	<select id="room" parameterType="MessageVO" resultType="MessageVO">
+		SELECT * FROM CHAT_TBL
+		WHERE SENDER = #{sender} AND RECEIVER = #{receiver}
+		OR SENDER = #{receiver} AND RECEIVER = #{sender}
+	</select>
+	
 </mapper>

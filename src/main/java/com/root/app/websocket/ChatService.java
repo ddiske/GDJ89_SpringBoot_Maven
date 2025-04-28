@@ -16,5 +16,9 @@ public class ChatService {
 	public List<UserVO> getList() throws Exception {
 		return chatDAO.getList();
 	}
+	
+	public List<MessageVO> room(MessageVO messageVO) throws Exception {
+		return chatDAO.room(messageVO);
+	}
 
 }

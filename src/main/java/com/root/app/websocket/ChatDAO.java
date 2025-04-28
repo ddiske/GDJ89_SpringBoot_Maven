@@ -10,5 +10,6 @@ import com.root.app.user.UserVO;
 public interface ChatDAO {
 	
 	public List<UserVO> getList() throws Exception;
+	public List<MessageVO> room(MessageVO messageVO) throws Exception;
 
 }
