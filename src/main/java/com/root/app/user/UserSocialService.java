@@ -48,7 +48,7 @@ public class UserSocialService extends DefaultOAuth2UserService {
 		userVO.setAttributes(user.getAttributes());
 		userVO.setUsername(attr.get("nickname").toString());
 		userVO.setFileName(attr.get("thumbnail_image").toString());
-		userVO.setAccessToken(userRequest.getAccessToken().toString());
+		userVO.setAccessToken(userRequest.getAccessToken().getTokenValue());
 		userVO.setSns(userRequest.getClientRegistration().getRegistrationId());
 		List<RoleVO> list = new ArrayList<>();
 		RoleVO roleVO = new RoleVO();

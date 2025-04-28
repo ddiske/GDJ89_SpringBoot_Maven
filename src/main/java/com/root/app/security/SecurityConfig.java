@@ -72,8 +72,8 @@ public class SecurityConfig  {
 					/** Logout 관련 설정 */
 					.logout(logout->{
 						logout.logoutUrl("/user/logout")
-							  .logoutSuccessUrl("/")
-//							  .addLogoutHandler(logoutHandler)
+//							  .logoutSuccessUrl("/")
+							  .addLogoutHandler(logoutHandler)
 							  .invalidateHttpSession(true)
 							  .permitAll();
 					})
