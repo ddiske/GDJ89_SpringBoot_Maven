@@ -2,6 +2,7 @@ package com.root.app.websocket;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,8 @@ public class ChatHandler implements WebSocketHandler {
  	
  	private Map<String, WebSocketSession> users = new HashMap<>();
  	
+ 	private Map<Long, StringBuffer> messages = new HashMap<>();
+ 	
  	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		// TODO Auto-generated method stub
@@ -42,16 +45,25 @@ public class ChatHandler implements WebSocketHandler {
 	public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
 		// TODO Auto-generated method stub
 		//WebSocket으로 연결된 Client가 메세지를 송신 했을때
-		log.info("message : {}", message);
- 		log.info("m :  {}", message.getPayload());
  		
+		log.info("{}", message.getPayload());
+		
  		MessageVO mes = new MessageVO();
  		ObjectMapper om = new ObjectMapper();
  		mes = om.readValue(message.getPayload().toString(), MessageVO.class);
  		mes.setSender(session.getPrincipal().getName());
  		log.info("{}", mes);
  		
+ 		if(!messages.containsKey(mes.getRoomNum())) {
+ 			StringBuffer sb = new StringBuffer();
+ 			sb.append(message.getPayloadLength());
+ 			messages.put(mes.getRoomNum(), sb);
+ 		}else {
+ 			messages.get(mes.getRoomNum()).append(message.getPayload());
+ 		}
  		
+ 		users.get(mes.getReceiver()).sendMessage(message);
+ 		users.get(mes.getSender()).sendMessage(message);
  		
  		list.forEach(s ->{
  			try {

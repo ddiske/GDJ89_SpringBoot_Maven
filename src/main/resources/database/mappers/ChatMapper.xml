@@ -13,6 +13,12 @@
 		SELECT * FROM CHAT_TBL
 		WHERE SENDER = #{sender} AND RECEIVER = #{receiver}
 		OR SENDER = #{receiver} AND RECEIVER = #{sender}
+		ORDER BY CHAT_TIME ASC
 	</select>
+	
+	<insert id="makeRoom" parameterType="MessageVO">
+		INSERT INTO CHAT_TBL
+		VALUES (0, #{roomNum}, #{sender}, #{receiver}, null, now())
+	</insert>
 	
 </mapper>

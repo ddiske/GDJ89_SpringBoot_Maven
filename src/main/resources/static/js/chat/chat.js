@@ -70,13 +70,16 @@ const tbl = document.getElementById("dataTable")
 const cbody = document.getElementById("chat-body")
 
 tbl.addEventListener("click", (e)=>{
-
     if(e.target.classList.contains("btn-circle")){
+        chatBody.innerHTML = "";
         receiver.value = e.target.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.innerText;
         fetch(`/chat/room?receiver=${receiver.value}&sender=${sender.value}`)
         .then(r=>r.json())
         .then(r=>{
-            console.log(r)
+            r.forEach(e => {
+                let d = makeData(e);
+                chatBody.append(d);
+            });
         })
     }
 

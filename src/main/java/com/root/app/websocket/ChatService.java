@@ -1,5 +1,6 @@
 package com.root.app.websocket;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,13 @@ public class ChatService {
 	}
 	
 	public List<MessageVO> room(MessageVO messageVO) throws Exception {
+		List<MessageVO> list = chatDAO.room(messageVO);
+		if(list.size() == 0) {
+			Calendar calendar = Calendar.getInstance();
+ 			long rm = calendar.getTimeInMillis();
+ 			messageVO.setRoomNum(rm);
+			chatDAO.makeRoom(messageVO);
+		}
 		return chatDAO.room(messageVO);
 	}
 
