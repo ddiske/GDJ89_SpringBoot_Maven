@@ -17,6 +17,11 @@ websocket.onopen=()=>{
 websocket.onmessage=(m)=>{
     //
     let mes = JSON.parse(m.data)
+    let start = mes.sender
+    let re = receiver.value; // 현재 채팅하는 상대방
+    if(re != start && start != sender.value) {
+        return;
+    }
     let r = makeData(mes);
     chatBody.append(r)
     console.log(m)
@@ -32,6 +37,7 @@ send.addEventListener("click", ()=>{
     let m = message.value
     let offset = 1000 * 60 * 60 * 9
     let mes = new Message();
+    mes.sender = sender.value
     mes.body = m
     mes.receiver = receiver.value;
     mes.date = new Date((new Date()).getTime()+offset).toISOString().replace("T", " ").split('.')[0]

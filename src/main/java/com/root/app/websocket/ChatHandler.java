@@ -66,22 +66,28 @@ public class ChatHandler implements WebSocketHandler {
  		List<MessageVO> rooms = chatDAO.room(mes);
  		mes.setRoomNum(rooms.get(0).getRoomNum()); 		
  		
- 		if(!messages.containsKey(mes.getRoomNum())) {
- 			List<MessageVO> list = new ArrayList<>();
- 			list.add(mes);
- 			messages.put(mes.getRoomNum(), list);
- 		}else {
- 			messages.get(mes.getRoomNum()).add(mes);
- 		}
+// 		if(!messages.containsKey(mes.getRoomNum())) {
+// 			List<MessageVO> list = new ArrayList<>();
+// 			list.add(mes);
+// 			messages.put(mes.getRoomNum(), list);
+// 		}else {
+// 			messages.get(mes.getRoomNum()).add(mes);
+// 		}
  		
- 		users.get(mes.getReceiver()).sendMessage(message);
+ 		try {
+ 			users.get(mes.getReceiver()).sendMessage(message);			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
  		users.get(mes.getSender()).sendMessage(message);
  		
- 		if(messages.get(mes.getRoomNum()).size() > 2) {
- 			List<MessageVO> copy = messages.get(mes.getRoomNum());
- 			messages.put(mes.getRoomNum(), new ArrayList<>());
- 			chatDAO.addChats(copy);
- 		}
+ 		chatDAO.addChat(mes);
+// 		if(messages.get(mes.getRoomNum()).size() > 2) {
+// 			List<MessageVO> copy = messages.get(mes.getRoomNum());
+// 			messages.put(mes.getRoomNum(), new ArrayList<>());
+// 			chatDAO.addChats(copy);
+// 		}
+ 		
  		
 // 		list.forEach(s ->{
 // 			try {

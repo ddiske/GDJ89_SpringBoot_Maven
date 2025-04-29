@@ -18,7 +18,7 @@
 	
 	<insert id="addChat" parameterType="MessageVO">
 		INSERT INTO CHAT_TBL
-		VALUES (0, #{roomNum}, #{sender}, #{receiver}, #{body}, now())
+		VALUES (0, #{roomNum}, #{sender}, #{receiver}, #{body}, #{date})
 	</insert>
 	
 	<insert id="addChats" parameterType="java.util.List">
