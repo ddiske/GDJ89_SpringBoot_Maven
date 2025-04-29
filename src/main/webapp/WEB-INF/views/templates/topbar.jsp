@@ -120,7 +120,7 @@
 			<div
 				class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
 				aria-labelledby="messagesDropdown" id="messages">
-				<h6 class="dropdown-header">Message Center</h6>
+				<h6 class="dropdown-header" id="memoAdd">Message Center</h6>
 				<c:forEach items="${memoList }" var="m">
 					<a class="dropdown-item d-flex align-items-center mes" href="#">
 						<div class="dropdown-list-image mr-3">
@@ -130,11 +130,11 @@
 						</div>
 						<div class="font-weight-bold">
 							<div class="text-truncate">${m.body }</div>
-							<div class="small text-gray-500">${m.sender } · ${m.date }</div>
+							<div class="small text-gray-500">${m.sender } ·  ${m.date }</div>
 						</div>
 					</a>
 				</c:forEach>
-				<a class="dropdown-item text-center small text-gray-500" data-toggle="modal" data-target="#memo" href="#" id="memoAdd">Read
+				<a class="dropdown-item text-center small text-gray-500" data-toggle="modal" data-target="#memo" href="#">Read
 					More Messages</a>
 			</div></li>
 

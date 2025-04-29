@@ -176,7 +176,7 @@ function makeMemo(data) {
     div.appendChild(div2)
     a.appendChild(div)
 
-    document.getElementById("memoAdd").before(a)
+    document.getElementById("memoAdd").after(a)
 
 }
 
