@@ -14,17 +14,23 @@ public class ChatService {
 	@Autowired
 	private ChatDAO chatDAO;
 	
+	@Autowired
+	private ChatHandler chatHandler;
+	
 	public List<UserVO> getList() throws Exception {
 		return chatDAO.getList();
 	}
 	
 	public List<MessageVO> room(MessageVO messageVO) throws Exception {
 		List<MessageVO> list = chatDAO.room(messageVO);
+		
+		
+		
 		if(list.size() == 0) {
 			Calendar calendar = Calendar.getInstance();
  			long rm = calendar.getTimeInMillis();
  			messageVO.setRoomNum(rm);
-			chatDAO.makeRoom(messageVO);
+			chatDAO.addChat(messageVO);
 		}
 		return chatDAO.room(messageVO);
 	}

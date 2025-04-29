@@ -30,11 +30,11 @@ websocket.onclose=()=>{
 //개발자가 메세시 송신 할 때
 send.addEventListener("click", ()=>{
     let m = message.value
-    
+    let offset = 1000 * 60 * 60 * 9
     let mes = new Message();
     mes.body = m
     mes.receiver = receiver.value;
-    mes.date = new Date();
+    mes.date = new Date((new Date()).getTime()+offset).toISOString().replace("T", " ").split('.')[0]
     mes.status = "1";
 
     websocket.send(JSON.stringify(mes))

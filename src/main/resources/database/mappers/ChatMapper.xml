@@ -16,9 +16,17 @@
 		ORDER BY CHAT_TIME ASC
 	</select>
 	
-	<insert id="makeRoom" parameterType="MessageVO">
+	<insert id="addChat" parameterType="MessageVO">
 		INSERT INTO CHAT_TBL
-		VALUES (0, #{roomNum}, #{sender}, #{receiver}, null, now())
+		VALUES (0, #{roomNum}, #{sender}, #{receiver}, #{body}, now())
+	</insert>
+	
+	<insert id="addChats" parameterType="java.util.List">
+		INSERT INTO CHAT_TBL (ROOM_NUM, SENDER, RECEIVER, BODY, CHAT_TIME)
+		VALUES
+			<foreach collection="list" item="vo" separator=",">
+				(#{vo.roomNum}, #{vo.sender}, #{vo.receiver}, #{vo.body}, #{vo.date})
+			</foreach>
 	</insert>
 	
 </mapper>
