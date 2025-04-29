@@ -13,20 +13,27 @@
 		SELECT * FROM CHAT_TBL
 		WHERE SENDER = #{sender} AND RECEIVER = #{receiver}
 		OR SENDER = #{receiver} AND RECEIVER = #{sender}
+		AND STATUS = 1
 		ORDER BY CHAT_TIME ASC
 	</select>
 	
 	<insert id="addChat" parameterType="MessageVO">
 		INSERT INTO CHAT_TBL
-		VALUES (0, #{roomNum}, #{sender}, #{receiver}, #{body}, #{date})
+		VALUES (0, #{roomNum}, #{sender}, #{receiver}, #{body}, #{date}, #{status}, 0)
 	</insert>
 	
 	<insert id="addChats" parameterType="java.util.List">
-		INSERT INTO CHAT_TBL (ROOM_NUM, SENDER, RECEIVER, BODY, CHAT_TIME)
+		INSERT INTO CHAT_TBL (ROOM_NUM, SENDER, RECEIVER, BODY, CHAT_TIME, STATUS)
 		VALUES
 			<foreach collection="list" item="vo" separator=",">
-				(#{vo.roomNum}, #{vo.sender}, #{vo.receiver}, #{vo.body}, #{vo.date})
+				(#{vo.roomNum}, #{vo.sender}, #{vo.receiver}, #{vo.body}, #{vo.date}, #{vo.status})
 			</foreach>
 	</insert>
+	
+	<select id="getMemo" parameterType="MessageVO" resultType="MessageVO">
+		SELECT * FROM CHAT_TBL
+		WHERE RECEIVER = #{receiver} AND STATUS = '3' AND READ_STATUS = 0
+		ORDER BY CHAT_TIME DESC
+	</select>
 	
 </mapper>

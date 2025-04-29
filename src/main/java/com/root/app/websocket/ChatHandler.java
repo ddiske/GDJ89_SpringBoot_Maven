@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
+import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -61,6 +62,19 @@ public class ChatHandler implements WebSocketHandler {
  		mes = om.readValue(message.getPayload().toString(), MessageVO.class);
  		mes.setSender(session.getPrincipal().getName());
  		log.info("{}", mes);
+ 		
+ 		if(mes.getStatus().equals("3")) {
+ 			WebSocketMessage<?> webSocketMessage = new TextMessage(om.writeValueAsString(mes));
+ 			try {
+ 				// DB Insert
+ 				chatDAO.addChat(mes);
+ 				users.get(mes.getReceiver()).sendMessage(webSocketMessage);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+ 			
+ 			return;
+ 		}
  		
  		// 1:1 통신 시 DB에서 ROOM정보를 조회
  		List<MessageVO> rooms = chatDAO.room(mes);

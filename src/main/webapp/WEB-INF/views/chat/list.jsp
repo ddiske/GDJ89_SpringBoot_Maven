@@ -55,8 +55,6 @@
 </div>
 <!-- End of Page Wrapper -->
     
-	
-<c:import url="/WEB-INF/views/templates/footer.jsp"></c:import>
 <div class="modal" id="chat" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -85,6 +83,8 @@
       </div>
     </div>
   </div>
-<script src="/js/chat/chat.js"></script>
+	
+<c:import url="/WEB-INF/views/templates/footer.jsp"></c:import>
+<!-- <script src="/js/chat/chat.js"></script> -->
 </body>
 </html>

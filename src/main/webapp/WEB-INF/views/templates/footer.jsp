@@ -26,6 +26,33 @@
     </div>
 </div>
 
+<!-- memo Modal -->
+<div class="modal" id="memo" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <textarea name="" id="memoContents"></textarea>
+        </div>
+        <div class="modal-footer">
+            <div>
+                <sec:authorize access="isAuthenticated()">
+                    <sec:authentication property="principal" var="user"/>
+                </sec:authorize>
+                <input type="hidden" id="memoSender" value="${user.username}">
+                <input type="hidden" id="memoReceiver" value="chat">
+                <button id="memoSend">SEND</button>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
 <!-- Bootstrap core JavaScript-->
 <script src="/vendor/jquery/jquery.min.js"></script>
 <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -42,3 +69,5 @@
 <!-- Page level custom scripts -->
 <script src="/js/demo/chart-area-demo.js"></script>
 <script src="/js/demo/chart-pie-demo.js"></script>
+
+<script src="/js/chat/chat.js"></script>
