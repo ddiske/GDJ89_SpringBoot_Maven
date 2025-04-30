@@ -43,14 +43,14 @@ public class SecurityConfig  {
 //	private SecurityLogoutHandler logoutHandler;
 	
 	// 정적자원들을 Security에서 제외
-//	@Bean
-//	WebSecurityCustomizer customizer() {
-//		return (web) -> {
-//			web.ignoring()
-//			   .requestMatchers("/css/**")
-//			   .requestMatchers("/js/**", "/img/**", "/vendor/**", "/images/**");
-//		};
-//	};
+	@Bean
+	WebSecurityCustomizer customizer() {
+		return (web) -> {
+			web.ignoring()
+			   .requestMatchers("/css/**")
+			   .requestMatchers("/js/**", "/img/**", "/vendor/**", "/images/**");
+		};
+	};
 	
 	// 인증과 권한에 관한 설정
 	@Bean
