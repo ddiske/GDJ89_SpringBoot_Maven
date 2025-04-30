@@ -5,14 +5,23 @@ import java.util.Date;
 
 import javax.crypto.SecretKey;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.root.app.user.UserService;
+import com.root.app.user.UserVO;
+
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Component
 public class JwtTokenManager {
 	
@@ -26,6 +35,9 @@ public class JwtTokenManager {
 	private String secretKey;
 	
 	private SecretKey key;
+	
+	@Autowired
+	private UserService userService;
 	
 	@PostConstruct // 생성자도 사용 가능
 	public void init() {
@@ -45,6 +57,28 @@ public class JwtTokenManager {
 					.signWith(key)
 					.compact();
 		
+	}
+	
+//	Token 검증
+	public Claims tokenValidation(String token) throws Exception {
+		
+		return Jwts.parser()
+					.setSigningKey(key)
+					.build()
+					.parseClaimsJws(token)
+					.getBody();
+		
+//		SecurityException || MalformedException || SignatureException : Invalid Jwt Signature -> 유효하지 않은 JWT 서명
+//		ExpiredJwtException -> 유효기간이 만료된 Token
+//		UnsupportedJwtException -> 지원하지 않는 Token
+//		IllegalArguementException -> Jwt claim is Empty
+		
+	}
+	
+	public Authentication getAuthentication(String username) {
+		UserDetails userDetails = userService.loadUserByUsername(username);
+		Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+		return authentication;
 	}
 
 }

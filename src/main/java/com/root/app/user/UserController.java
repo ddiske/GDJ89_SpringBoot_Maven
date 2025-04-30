@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -99,10 +101,15 @@ public class UserController {
 		return "redirect:/";
 	}
 	
-//	@GetMapping("logout")
-//	public String logout(HttpSession session) throws Exception {
-//		session.invalidate();
-//		return "redirect:/";
-//	}
+	@GetMapping("logout")
+	public String logout(HttpSession session, HttpServletResponse response) throws Exception {
+		session.invalidate();
+		Cookie cookie = new Cookie("token", null);
+		cookie.setMaxAge(0);
+		cookie.setPath("/");
+		response.addCookie(cookie);
+		
+		return "redirect:/";
+	}
 
 }

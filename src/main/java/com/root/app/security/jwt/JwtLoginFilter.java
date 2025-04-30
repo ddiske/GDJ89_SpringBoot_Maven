@@ -64,7 +64,6 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
 //		cookie.setSecure(true);// SSL 통신시에만 쿠키를 저장
 		cookie.setHttpOnly(true);// 자바스크립트에서 임의로 쿠키를 변경할 수 없게 함
 		response.addCookie(cookie);
-		
 
 		response.sendRedirect("/");
 		

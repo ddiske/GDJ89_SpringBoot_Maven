@@ -11,6 +11,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.root.app.security.jwt.JwtAuthenticationFilter;
 import com.root.app.security.jwt.JwtLoginFilter;
 import com.root.app.security.jwt.JwtTokenManager;
 import com.root.app.user.UserService;
@@ -126,6 +127,7 @@ public class SecurityConfig  {
 						h.disable();
 					})
 					.addFilter(new JwtLoginFilter(configuration.getAuthenticationManager(), jwtTokenManager))
+					.addFilter(new JwtAuthenticationFilter(configuration.getAuthenticationManager(), jwtTokenManager))
 					;
 		
 					
