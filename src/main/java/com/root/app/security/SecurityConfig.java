@@ -1,5 +1,8 @@
 package com.root.app.security;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +11,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.root.app.user.UserService;
 import com.root.app.user.UserSocialService;
@@ -45,7 +51,7 @@ public class SecurityConfig  {
 	@Bean
 	SecurityFilterChain chain(HttpSecurity httpSecurity) throws Exception {
 		
-		httpSecurity.cors(cors->cors.disable()) /** CORS 허용, Filter에서 사용 가능 */
+		httpSecurity.cors(cors->cors.configurationSource(getCorsConfiguration())) /** CORS 허용, Filter에서 사용 가능 */
 					.csrf(csrf->csrf.disable())
 					/** 권한 적용 */
 					.authorizeHttpRequests(authorizeRequest->{
@@ -105,6 +111,20 @@ public class SecurityConfig  {
 					
 		
 		return httpSecurity.build();
+	}
+	
+	CorsConfigurationSource getCorsConfiguration() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedOriginPatterns(List.of("*"));
+		
+		// List.of("*") - error
+		configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
+		
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		
+		return source;
+		
 	}
 
 }

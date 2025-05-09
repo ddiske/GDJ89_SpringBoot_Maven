@@ -9,9 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.root.app.board.BoardFileVO;
@@ -22,7 +25,7 @@ import com.root.app.util.Pager;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Controller
+@RestController
 @RequestMapping("/notice/*")
 public class NoticeController {
 	
@@ -37,22 +40,23 @@ public class NoticeController {
 		return this.name;
 	}
 	
-	@GetMapping("list")
-	public String getList(Model model, Pager pager) throws Exception {
+	@GetMapping("list/{page}/{kind}/{search}")
+	public List<BoardVO> getList(Pager pager) throws Exception {
+		
 		List<BoardVO> ar = noticeService.getList(pager);
-		model.addAttribute("list", ar);
+//		model.addAttribute("list", ar);
 //		model.addAttribute("pager", pager);
 		
-		return "board/list";
+		return ar;
 	}
 	
 	@GetMapping("detail")
-	public String getDetail(BoardVO boardVO, Model model) throws Exception {
+	public BoardVO getDetail(BoardVO boardVO, Model model) throws Exception {
 		
 		boardVO = noticeService.getDetail(boardVO);
 		model.addAttribute("vo", boardVO);
 		
-		return "board/detail";
+		return boardVO;
 	}
 	
 	@GetMapping("fileDown")
@@ -62,11 +66,6 @@ public class NoticeController {
 		model.addAttribute("fileVO", boardFileVO);
 		
 		return "fileDownView";
-	}
-	
-	@GetMapping("add")
-	public String add() throws Exception {
-		return "board/add";
 	}
 	
 	@PostMapping("add")
