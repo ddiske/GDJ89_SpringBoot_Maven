@@ -27,6 +27,8 @@ public class HomeController {
 			messageVO.setReceiver(userVO.getUsername());
 			List<MessageVO> list = chatDAO.getMemo(messageVO);
 			session.setAttribute("memoList", list);			
+		}else {
+			throw new NullPointerException();
 		}
 		
 		return "home";
