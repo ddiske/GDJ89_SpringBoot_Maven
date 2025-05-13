@@ -1,17 +1,22 @@
 package com.root.app.board.notice;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.root.app.board.BoardFileVO;
@@ -22,7 +27,7 @@ import com.root.app.util.Pager;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Controller
+@RestController
 @RequestMapping("/notice/*")
 public class NoticeController {
 	
@@ -38,21 +43,24 @@ public class NoticeController {
 	}
 	
 	@GetMapping("list")
-	public String getList(Model model, Pager pager) throws Exception {
+	@CrossOrigin
+	public Map<String, Object> getList(Model model, Pager pager) throws Exception {
 		List<BoardVO> ar = noticeService.getList(pager);
-		model.addAttribute("list", ar);
-//		model.addAttribute("pager", pager);
 		
-		return "board/list";
+		Map<String, Object> map = new HashMap<>();
+		map.put("list", ar);
+		map.put("pager", pager);
+		
+		return map;
 	}
 	
 	@GetMapping("detail")
-	public String getDetail(BoardVO boardVO, Model model) throws Exception {
+	@CrossOrigin
+	public BoardVO getDetail(BoardVO boardVO, Model model) throws Exception {
 		
 		boardVO = noticeService.getDetail(boardVO);
-		model.addAttribute("vo", boardVO);
 		
-		return "board/detail";
+		return boardVO;
 	}
 	
 	@GetMapping("fileDown")

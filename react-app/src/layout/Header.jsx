@@ -5,10 +5,10 @@ function Header() {
         <>
             <h1>Header</h1>
             <div>
-                <Link to='Home'>Home</Link>
-                <Link to='/Notice'>Notice</Link>
-                <Link to='/Qna'>Qna</Link>
-                <Link to='/Join'>Join</Link>
+                <Link to='/'>Home</Link>
+                <Link to='/notice/list'>Notice</Link>
+                <Link to='/qna/list'>Qna</Link>
+                {/* <Link to='/Join'>Join</Link> */}
             </div>
         </>
     )
