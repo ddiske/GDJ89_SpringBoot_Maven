@@ -14,7 +14,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
-const pages = ['Products', 'Pricing', 'Blog', 'Notice'];
+const pages = ['Home', 'Products', 'Pricing', 'Blog', 'Notice'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Header() {
