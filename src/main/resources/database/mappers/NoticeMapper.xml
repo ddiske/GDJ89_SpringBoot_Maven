@@ -84,4 +84,9 @@
 		WHERE BOARD_NUM = #{boardNum}
 	</delete>
 	
+	<delete id="deleteFiles" parameterType="BoardVO">
+		DELETE FROM NOTICE_FILES_TBL
+		WHERE BOARD_NUM = #{boardNum}
+	</delete>
+	
 </mapper>

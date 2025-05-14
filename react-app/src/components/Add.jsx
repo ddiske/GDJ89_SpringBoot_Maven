@@ -1,7 +1,10 @@
 import { useRef, useState } from "react"
+import { Navigate, useNavigate } from "react-router-dom"
 
 // 작성자, 제목, 내용, 첨부파일3개 고정
 export default function Add() {
+
+    const navigate = useNavigate()
 
     // const b = useRef({username:"", title:"", contents:""})
     const username = useRef("")
@@ -22,6 +25,7 @@ export default function Add() {
     }
 
     function click(e) {
+        e.preventDefault();
         let f = new FormData(e.target)
         fetch("http://localhost:81/notice/add", {
             method : "POST",
@@ -29,7 +33,9 @@ export default function Add() {
         })
         .then(r=>r.json())
         .then(r=>{
-            console.log(r)
+            if(r > 0) {
+                navigate("/notice/list")
+            }
         })
     }
 

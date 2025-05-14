@@ -1,5 +1,5 @@
 import { useRef } from "react"
-import { useLocation, useParams, useSearchParams } from "react-router-dom"
+import { Link, useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom"
 
 export default function Detail() {
     // 파라미터 : URL/파라미터값/파라미터값
@@ -27,6 +27,31 @@ export default function Detail() {
     //     vo.current = r
     // })
 
+    // useNavigate(url, option)
+    // state : 
+    // replace : boolean : 뒤로 가기 방지(true)
+    // relative : route -> 절대경로, path -> 상대경로
+    const navigate = useNavigate()
+
+    function del() {
+        let p = new URLSearchParams()
+        p.append("boardNum", detail.boardNum)
+
+
+        fetch("http://localhost:81/notice/delete", {
+            method : "POST",
+            body : p
+        })
+        .then(r=>r.json())
+        .then(r=>{
+            console.log(r)
+            if(r > 0) {
+                alert("Deleted")
+                navigate("/notice/list")
+            }
+        })
+    }
+
     return (
         <>
             <h1>Detail</h1>
@@ -36,6 +61,9 @@ export default function Detail() {
             <h3>{detail.boardDate}</h3>
             <h3>{detail.boardHit}</h3>
             <h3>{detail.username}</h3>
+            <hr />
+            <button onClick={del}>Delete</button>
+            <Link to="/notice/update" state={{detail:detail}}>Update</Link>
         </>
     )
 }

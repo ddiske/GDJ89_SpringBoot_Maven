@@ -12,6 +12,7 @@ import com.root.app.board.BoardFileVO;
 import com.root.app.board.BoardService;
 import com.root.app.board.BoardVO;
 import com.root.app.files.FileManager;
+import com.root.app.files.FileVO;
 import com.root.app.util.Pager;
 
 @Service
@@ -84,6 +85,16 @@ public class NoticeService implements BoardService {
 
 	@Override
 	public int delete(BoardVO boardVO) throws Exception {
+		
+		boardVO = noticeDAO.getDetail(boardVO);
+		
+		for(FileVO f : boardVO.getBoardFileVOs()) {
+			String fileName = f.getFileName();
+			fileManager.fileDelete(path.concat(kind), fileName);
+		}
+		
+		noticeDAO.deleteFiles(boardVO);
+		
 		return noticeDAO.delete(boardVO);
 	}
 

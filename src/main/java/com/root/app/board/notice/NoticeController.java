@@ -95,18 +95,18 @@ public class NoticeController {
 	}
 	
 	@PostMapping("update")
-	public String update(BoardVO boardVO) throws Exception {
-		noticeService.update(boardVO);
-		
-		return "redirect:./detail?boardNum="+boardVO.getBoardNum();
+	@CrossOrigin
+	public int update(BoardVO boardVO) throws Exception {
+		return noticeService.update(boardVO);
 	}
 	
 	@PostMapping("delete")
-	public String delete(BoardVO boardVO) throws Exception {
+	@CrossOrigin
+	public int delete(BoardVO boardVO) throws Exception {
 		
-		noticeService.delete(boardVO);
+		int result = noticeService.delete(boardVO);
 		
-		return "redirect:./list";
+		return result;
 	}
 
 }

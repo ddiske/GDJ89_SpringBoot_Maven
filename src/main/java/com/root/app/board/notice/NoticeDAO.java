@@ -11,5 +11,6 @@ import com.root.app.board.BoardVO;
 public interface NoticeDAO extends BoardDAO {
 	
 	public int addAll(List<BoardVO> ar) throws Exception;
+	public int deleteFiles(BoardVO boardVO) throws Exception;
 
 }
