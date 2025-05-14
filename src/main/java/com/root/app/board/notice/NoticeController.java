@@ -44,7 +44,7 @@ public class NoticeController {
 	
 	@GetMapping("list")
 	@CrossOrigin
-	public Map<String, Object> getList(Model model, Pager pager) throws Exception {
+	public Map<String, Object> getList(Pager pager) throws Exception {
 		List<BoardVO> ar = noticeService.getList(pager);
 		
 		Map<String, Object> map = new HashMap<>();
@@ -56,7 +56,7 @@ public class NoticeController {
 	
 	@GetMapping("detail")
 	@CrossOrigin
-	public BoardVO getDetail(BoardVO boardVO, Model model) throws Exception {
+	public BoardVO getDetail(BoardVO boardVO) throws Exception {
 		
 		boardVO = noticeService.getDetail(boardVO);
 		
@@ -72,17 +72,19 @@ public class NoticeController {
 		return "fileDownView";
 	}
 	
-	@GetMapping("add")
-	public String add() throws Exception {
-		return "board/add";
-	}
-	
 	@PostMapping("add")
-	public String add(BoardVO boardVO, @RequestParam(name = "attaches") MultipartFile [] attaches, @AuthenticationPrincipal UserVO userVO) throws Exception {
+	@CrossOrigin
+	public int add(BoardVO boardVO, @RequestParam(name = "attaches") MultipartFile [] attaches) throws Exception {
 		
-		boardVO.setUserName(userVO.getUsername());
+//		log.info("{}", boardVO);
+//		for(MultipartFile m : attaches) {
+//			log.info("{}", m.getOriginalFilename());
+//		}
+		
+//		boardVO.setUserName(userVO.getUsername());
 		int result = noticeService.add(boardVO, attaches);
-		return "redirect:./list";
+		
+		return result;
 	}
 	
 	@GetMapping("update")

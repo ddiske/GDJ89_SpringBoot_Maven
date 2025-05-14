@@ -55,7 +55,7 @@ function Notice() {
             </div>
             {
                 result.list.map(l=>
-                    <li key={l.boardNum}><Link to={`/notice/detail?boardNum=${l.boardNum}`} state={{detail:l}}>{l.boardTitle}</Link></li>
+                    <li key={l.boardNum}><Link to={`/notice/detail/${l.boardNum}`} state={{detail:l}}>{l.boardTitle}</Link></li>
                 )
             }
 
@@ -64,6 +64,8 @@ function Notice() {
             {
                 makeNum()
             }
+
+            <Link to="/notice/add">글 작성</Link>
 
         </>
     )

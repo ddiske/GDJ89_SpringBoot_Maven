@@ -1,5 +1,7 @@
 package com.root.app.security;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +10,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.reactive.CorsConfigurationSource;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 import com.root.app.user.UserService;
 import com.root.app.user.UserSocialService;
@@ -41,6 +46,20 @@ public class SecurityConfig  {
 		};
 	};
 	
+	CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration corsConfiguration = new CorsConfiguration();
+		
+		// Get 메서드까지 허용
+		corsConfiguration.setAllowedOrigins(List.of("*"));
+		
+		// 메서드 추가 허용
+		corsConfiguration.setAllowedMethods(List.of("POST"));
+		
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", corsConfiguration);
+		return source;
+	}
+	
 	// 인증과 권한에 관한 설정
 	@Bean
 	SecurityFilterChain chain(HttpSecurity httpSecurity) throws Exception {
@@ -49,12 +68,12 @@ public class SecurityConfig  {
 					.csrf(csrf->csrf.disable())
 					/** 권한 적용 */
 					.authorizeHttpRequests(authorizeRequest->{
-						authorizeRequest.requestMatchers("/notice/add", "/notice/update", "/notice/delete")
-										.hasRole("ADMIN")
-										.requestMatchers("/user/mypage", "/user/logout")
-										.authenticated()
-										.requestMatchers("/manager/**")
-										.hasAnyRole("MANAGER", "ADMIN")
+						authorizeRequest//.requestMatchers("/notice/add", "/notice/update", "/notice/delete")
+//										.hasRole("ADMIN")
+//										.requestMatchers("/user/mypage", "/user/logout")
+//										.authenticated()
+//										.requestMatchers("/manager/**")
+//										.hasAnyRole("MANAGER", "ADMIN")
 										.anyRequest()
 										.permitAll();
 					})
