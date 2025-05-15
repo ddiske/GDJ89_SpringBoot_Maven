@@ -12,7 +12,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.root.app.files.FileManager;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class UserService implements UserDetailsService {
 	
 	@Autowired
@@ -32,6 +35,7 @@ public class UserService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserVO userVO = new UserVO();
+		log.info(username);
 		userVO.setUsername(username);
 		userVO = userDAO.getDetail(userVO);
 		return userVO;
