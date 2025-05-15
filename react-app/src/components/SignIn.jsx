@@ -23,8 +23,9 @@ export default function SignIn() {
         })
         .then(r=>{
             if(!r.ok){
-                console.log(r.text())
-                throw new Error("Fail")
+                console.log(r)
+                // throw new Error("Fail")
+                return r.json().then(Promise.reject.bind(Promise))
             }
             return r.headers
         })
@@ -38,7 +39,7 @@ export default function SignIn() {
             nav("/");
         })
         .catch(e=>{
-            console.log(e)
+            console.log(e.message)
         })
     }
 

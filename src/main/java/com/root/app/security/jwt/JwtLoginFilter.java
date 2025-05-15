@@ -64,7 +64,9 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
 		
 		response.setCharacterEncoding("UTF-8");
 //		response.getWriter().print(failed.getMessage());
-		response.sendError(500, failed.getMessage());
+		
+		// 예외 유형에 따른 값을 변경해서 전송 코드 작성
+		response.sendError(500, "id 없음");
 		
 	}
 
