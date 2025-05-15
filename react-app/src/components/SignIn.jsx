@@ -21,7 +21,13 @@ export default function SignIn() {
             method : "POST",
             body : params
         })
-        .then(r=>r.headers)
+        .then(r=>{
+            if(!r.ok){
+                console.log(r.text())
+                throw new Error("Fail")
+            }
+            return r.headers
+        })
         .then(r=>{
             // session
             window.sessionStorage.setItem("AccessToken", r.get("AccessToken"))
