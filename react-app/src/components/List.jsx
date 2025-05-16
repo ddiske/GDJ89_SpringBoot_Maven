@@ -11,6 +11,7 @@ import { Container, Pagination, Stack } from '@mui/material';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { setHeaders } from '../commons/UserManager';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -57,7 +58,9 @@ export default function List() {
         params.append('page', page)
         params.append('search', search)
 
-        fetch(`http://localhost:81/notice/list?${params}`)
+        fetch(`http://localhost:81/notice/list?${params}`,{
+          headers : setHeaders()
+        })
         .then(r=>r.json())
         .then(r=>{
             setResult(r)

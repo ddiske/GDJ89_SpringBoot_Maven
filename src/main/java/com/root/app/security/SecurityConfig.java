@@ -16,6 +16,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.root.app.security.jwt.JwtAuthenticationFilter;
 import com.root.app.security.jwt.JwtLoginFilter;
 import com.root.app.security.jwt.JwtTokenManager;
 import com.root.app.user.UserService;
@@ -66,7 +67,7 @@ public class SecurityConfig  {
 		// 메서드 추가 허용
 		corsConfiguration.setAllowedMethods(List.of("POST", "DELETE", "PATCH", "PUT", "GET"));
 		
-		corsConfiguration.setAllowedHeaders(List.of("Content-type"));
+		corsConfiguration.setAllowedHeaders(List.of("*"));
 		corsConfiguration.setExposedHeaders(List.of("AccessToken", "RefreshToken"));
 		
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -82,7 +83,8 @@ public class SecurityConfig  {
 					.csrf(csrf->csrf.disable())
 					/** 권한 적용 */
 					.authorizeHttpRequests(authorizeRequest->{
-						authorizeRequest//.requestMatchers("/notice/add", "/notice/update", "/notice/delete")
+						authorizeRequest.requestMatchers("/notice/*").authenticated()
+										//.requestMatchers("/notice/add", "/notice/update", "/notice/delete")
 //										.hasRole("ADMIN")
 //										.requestMatchers("/user/mypage", "/user/logout")
 //										.authenticated()
@@ -131,12 +133,13 @@ public class SecurityConfig  {
 //						 .expiredUrl("/");
 						 
 					})
-					.oauth2Login(oauth2Login->{
-						oauth2Login.userInfoEndpoint(user->{
-							user.userService(service);
-						});
-					})
+//					.oauth2Login(oauth2Login->{
+//						oauth2Login.userInfoEndpoint(user->{
+//							user.userService(service);
+//						});
+//					})
 					.httpBasic(httpBasic -> httpBasic.disable())
+					.addFilter(new JwtAuthenticationFilter(authenticationConfiguration.getAuthenticationManager(), jwtTokenManager))
 					.addFilter(new JwtLoginFilter(authenticationConfiguration.getAuthenticationManager(), jwtTokenManager))
 					;
 		

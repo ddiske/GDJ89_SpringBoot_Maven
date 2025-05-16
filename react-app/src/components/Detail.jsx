@@ -1,5 +1,6 @@
 import { useRef } from "react"
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom"
+import { setHeaders } from "../commons/UserManager"
 
 export default function Detail() {
     // 파라미터 : URL/파라미터값/파라미터값
@@ -40,6 +41,7 @@ export default function Detail() {
 
         fetch("http://localhost:81/notice/delete", {
             method : "POST",
+            headers : setHeaders(),
             body : p
         })
         .then(r=>r.json())
