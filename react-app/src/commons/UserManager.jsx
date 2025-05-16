@@ -7,3 +7,11 @@ export function setHeaders() {
     return headers;
     
 }
+
+export function getHeaders(res) {
+
+    if(res.headers.get("AccessToken") != null) {
+        sessionStorage.setItem("AccessToken", res.headers.get("AccessToken"))
+    }
+
+}

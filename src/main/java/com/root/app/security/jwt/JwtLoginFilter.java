@@ -2,7 +2,12 @@ package com.root.app.security.jwt;
 
 import java.io.IOException;
 
+import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.CredentialsExpiredException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -66,7 +71,26 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
 //		response.getWriter().print(failed.getMessage());
 		
 		// 예외 유형에 따른 값을 변경해서 전송 코드 작성
-		response.sendError(500, "id 없음");
+		int status = 500;
+		if(failed instanceof BadCredentialsException) {
+			status = 522;
+		}else if(failed instanceof AccountExpiredException) {
+			//사용자 유효기간이 만료
+			status = 523;
+		}else if(failed instanceof LockedException) {
+			//계정 잠김
+			status = 524;
+		}else if(failed instanceof CredentialsExpiredException) {
+			//비번 유효기간 종료
+			status = 525;
+		}else if(failed instanceof DisabledException) {
+			//계정 사용 불가
+			status = 526;
+		}else {
+			//없는 사용자
+			status = 521;
+		}
+		response.setStatus(521);;
 		
 	}
 
