@@ -22,15 +22,14 @@ class UserTest {
 	@Test
 	void test() throws Exception {
 		UserVO userVO = new UserVO();
-		userVO.setUsername("admin");
-		userVO = userDAO.getDetail(userVO);
+		userVO.setUsername("user");
 		
-		String pw = "ddiske";
+		String pw = "12345678";
+		userVO.setPassword(passwordEncoder.encode(pw));
 		
-		boolean result = passwordEncoder.matches(pw, userVO.getPassword());
+		int result = userDAO.join(userVO);
 		
-		assertTrue(result);
-		
+		assertEquals(1, result);
 	}
 
 }

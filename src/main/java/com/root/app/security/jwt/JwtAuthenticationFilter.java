@@ -29,10 +29,10 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		
-		log.info("토큰 검증");
-		
+//		log.info("토큰 검증");
+//		
 		String token = request.getHeader("Authorization");
-		log.info("{}", token.substring(token.indexOf(" ")+1));
+//		log.info("{}", token.substring(token.indexOf(" ")+1));
 		
 		try {
 			if(!token.substring(7).equalsIgnoreCase("null") && token.startsWith("Bearer ")) {

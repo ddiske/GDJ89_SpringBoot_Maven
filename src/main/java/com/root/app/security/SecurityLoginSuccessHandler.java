@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import com.root.app.user.UserDAO;
 import com.root.app.user.UserVO;
-import com.root.app.websocket.LoginUsers;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -39,7 +38,7 @@ public class SecurityLoginSuccessHandler implements AuthenticationSuccessHandler
 			e.printStackTrace();
 		}
 		
-		LoginUsers.NAMES.add(userVO.getUsername());
+//		LoginUsers.NAMES.add(userVO.getUsername());
 		
 		// forward
 //		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/home.jsp");

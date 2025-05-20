@@ -13,7 +13,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import com.root.app.user.UserDAO;
 import com.root.app.user.UserVO;
-import com.root.app.websocket.LoginUsers;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -49,7 +48,7 @@ public class SecurityLogoutHandler implements LogoutHandler {
 			e.printStackTrace();
 		}
 		
-		LoginUsers.NAMES.remove(userVO.getUsername());
+//		LoginUsers.NAMES.remove(userVO.getUsername());
 		
  		if(authentication instanceof OAuth2AuthenticationToken) {
  			userVO =(UserVO)authentication.getPrincipal();

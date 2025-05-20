@@ -35,9 +35,9 @@ public class UserService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserVO userVO = new UserVO();
-		log.info(username);
 		userVO.setUsername(username);
 		userVO = userDAO.getDetail(userVO);
+		log.info("{}", userVO);
 		return userVO;
 	}
 	

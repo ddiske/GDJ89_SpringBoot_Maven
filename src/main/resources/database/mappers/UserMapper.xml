@@ -34,7 +34,7 @@
 		<result column="BIRTH" property="birth"/>
 		<result column="ORI_NAME" property="oriName"/>
 		<result column="FILE_NAME" property="fileName"/>
-		<result column="ACCOUNTNONEXPIRED" property="accountNonExpired"/>
+		<result column="accountNonExpired" property="accountNonExpired"/>
 		<result column="accountNonLocked" property="accountNonLocked"/>
 		<result column="credentialsNonExpired" property="credentialsNonExpired"/>
 		<result column="enabled" property="enabled"/>

@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <c:import url="/WEB-INF/views/templates/header.jsp"></c:import>
+<c:import url=""></c:import>
 </head>
 <body id="page-top">
 
@@ -85,6 +86,12 @@
   </div>
 	
 <c:import url="/WEB-INF/views/templates/footer.jsp"></c:import>
+<script type="text/javascript">
+	const socket = new SockJS("/ws/chat")
+	socket.onopen = function() {
+		console.log("연결")
+	}
+</script>
 <!-- <script src="/js/chat/chat.js"></script> -->
 </body>
 </html>
