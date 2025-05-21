@@ -83,7 +83,7 @@ public class SecurityConfig  {
 					.csrf(csrf->csrf.disable())
 					/** 권한 적용 */
 					.authorizeHttpRequests(authorizeRequest->{
-						authorizeRequest.requestMatchers("/notice/*").authenticated()
+						authorizeRequest//.requestMatchers("/notice/*").authenticated()
 										//.requestMatchers("/notice/add", "/notice/update", "/notice/delete")
 //										.hasRole("ADMIN")
 //										.requestMatchers("/user/mypage", "/user/logout")

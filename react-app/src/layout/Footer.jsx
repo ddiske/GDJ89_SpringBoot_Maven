@@ -2,9 +2,8 @@ import SockJS from "sockjs-client";
 
 function Footer() {
 
-    if(sessionStorage.getItem("AccessToken") != null) {
-        getSocket();
-    }
+    const loginState = useLoginStateContext();
+    
 
     function getSocket() {
         console.log("연결 시도")
