@@ -2,11 +2,13 @@ import SockJS from "sockjs-client";
 
 function Footer() {
 
-    getSocket();
+    if(sessionStorage.getItem("AccessToken") != null) {
+        getSocket();
+    }
 
     function getSocket() {
         console.log("연결 시도")
-        const socket = new SockJS("/ws/chat")//WebSocket("/ws/chat")
+        const socket = new SockJS(`/ws/chat?t=Bearer ${sessionStorage.getItem("AccessToken")}`)//WebSocket("/ws/chat")
 
         socket.onopen = function() {
             console.log("연결 성공 : ", socket)

@@ -26,7 +26,7 @@ public class ChatHandler implements WebSocketHandler {
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		log.info("Ws 연결");
 		
-		users.add(session);
+		us.put(session.getPrincipal().getName(), session);
 		
 	}
 
@@ -53,8 +53,8 @@ public class ChatHandler implements WebSocketHandler {
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
 		log.info("연결 종료");
-		users.remove(session);
 
+		us.remove(session.getPrincipal().getName());
 	}
 
 	@Override
